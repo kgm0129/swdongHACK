@@ -309,7 +309,7 @@ body {
 
 /* 콘텐츠 */
 .content {
-    width: 100%;
+    width: 35%;
     max-width: 1000px;
     margin: 20px auto;
     padding: 20px;
