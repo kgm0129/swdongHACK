@@ -33,7 +33,7 @@ def login():
             return redirect(url_for('home'))
         else:
             msg = 'Incorrect username/password!'
-    return render_template('index.html', msg=msg)
+    return render_template('login.html', msg=msg)
 
 @app.route('/pythonlogin/logout')
 def logout():
@@ -70,7 +70,7 @@ def register():
 @app.route('/pythonlogin/home')
 def home():
     if 'loggedin' in session:
-        return render_template('home.html', username=session['username'])
+        return render_template('index.html', username=session['username'], loggedin=True)
     return redirect(url_for('login'))
 
 @app.route('/pythonlogin/profile')
@@ -79,8 +79,12 @@ def profile():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM accounts WHERE id = %s', (session['id'],))
         account = cursor.fetchone()
-        return render_template('profile.html', account=account)
+        return render_template('profile.html', account=account, loggedin=True)
     return redirect(url_for('login'))
+
+@app.context_processor
+def inject_loggedin_status():
+    return {'loggedin': 'loggedin' in session}
 
 if __name__ == '__main__':
     app.run(debug=True)
