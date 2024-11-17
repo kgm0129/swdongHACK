@@ -5,6 +5,7 @@ import hashlib
 import re
 
 app = Flask(__name__)
+
 app.secret_key = 'your secret key'
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -14,7 +15,7 @@ app.config['MYSQL_DB'] = 'pythonlogin'
 
 mysql = MySQL(app)
 
-@app.route('/pythonlogin/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     msg = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
